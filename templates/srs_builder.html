@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Smart SRS Builder | LabPilot AI{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <h3 class="fw-bold mb-1"><i class="fa-solid fa-file-lines text-primary me-2"></i> Smart SRS Builder</h3>
+            <p class="text-muted mb-0">Experiment 1: Triangle Classification Specification. Formulate measurable, testable requirements.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary" id="btnAddReq">
+                <i class="fa-solid fa-plus me-1"></i> Add Requirement
+            </button>
+            <button class="btn btn-primary fw-semibold" id="btnAnalyzeSRS">
+                <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Analyze Quality & Ambiguity
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Main Requirements Table -->
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 bg-white">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">Requirement Specification Table (IEEE 830 Format)</h6>
+                <span class="badge bg-secondary-subtle text-secondary" id="reqCountBadge">6 Requirements</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="srsTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 15%;">Req ID</th>
+                                <th style="width: 50%;">Requirement Statement (Shall / Must)</th>
+                                <th style="width: 15%;">Type</th>
+                                <th style="width: 15%;">Priority</th>
+                                <th style="width: 5%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="srsTableBody">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Results Card (Hidden initially, shown after click) -->
+        <div class="card shadow-sm border-0 bg-white mt-4 d-none" id="analysisResultCard">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-microscope text-primary me-2"></i> SRS Quality & Ambiguity Report</h6>
+                <span class="badge" id="gradeBadge">Grade: A</span>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center mb-4">
+                    <div class="col-md-3 text-center border-end">
+                        <div class="score-circle bg-primary-subtle text-primary border border-primary mb-2" id="scoreCircle">
+                            <span class="fs-3 fw-bold" id="avgScoreText">92%</span>
+                        </div>
+                        <span class="small fw-bold text-muted">Quality Index</span>
+                    </div>
+                    <div class="col-md-9 px-4">
+                        <h6 class="fw-bold mb-2">Automated Heuristic Summary</h6>
+                        <p class="text-muted small mb-2" id="summaryText">
+                            Analyzed for IEEE 830 ambiguity keywords, modal verbs, and measurable thresholds.
+                        </p>
+                        <div id="ambiguityBadgesContainer" class="d-flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold mb-2">Requirement-by-Requirement Feedback</h6>
+                <div class="list-group" id="feedbackList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Practical Copilot & Tips (Right Column) -->
+    <div class="col-lg-4">
+        <!-- AI Practical Copilot Card -->
+        <div class="card shadow-sm border-0 bg-white mb-4">
+            <div class="card-header bg-dark text-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-robot text-warning me-2"></i> AI Practical Copilot</h6>
+                <span class="badge bg-warning text-dark">Socratic Mode</span>
+            </div>
+            <div class="card-body">
+                <div class="p-3 bg-light rounded-3 mb-3 border">
+                    <p class="small text-secondary mb-1 fw-bold">Contextual Hint for EXP-01:</p>
+                    <p class="small text-dark mb-0">
+                        "Notice that requirements stating <em>'The system must be fast'</em> or <em>'user-friendly'</em> will fail verification. Replace them with explicit metrics like <em>'response time &lt; 100ms'</em>."
+                    </p>
+                </div>
+                <div class="p-3 bg-primary-subtle rounded-3 border border-primary-subtle">
+                    <p class="small text-primary mb-1 fw-bold"><i class="fa-solid fa-lightbulb me-1"></i> Edge Case Question:</p>
+                    <p class="small text-dark mb-0">
+                        Does your specification distinguish between three sides that cannot form a triangle (e.g. 1, 2, 3 where 1+2=3) versus negative numbers (-1, 2, 3)?
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- IEEE 830 Standard Rule Box -->
+        <div class="card shadow-sm border-0 bg-white">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-book-bookmark text-primary me-2"></i> IEEE 830 Golden Rules</h6>
+            </div>
+            <div class="card-body small text-muted">
+                <ul class="ps-3 mb-0">
+                    <li class="mb-2"><strong>Unambiguous:</strong> Only one interpretation possible.</li>
+                    <li class="mb-2"><strong>Verifiable:</strong> Must have finite, concrete pass/fail criteria.</li>
+                    <li class="mb-2"><strong>Traceable:</strong> Assigned unique identifier (`REQ-01`, `FR-01`).</li>
+                    <li><strong>Ranked:</strong> Clearly marked as <em>Must-Have</em> or <em>Should-Have</em>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize default requirements from backend
+    let requirementsData = {{ default_requirements | safe }};
+
+    function renderSRSTable() {
+        const tbody = document.getElementById("srsTableBody");
+        tbody.innerHTML = "";
+        requirementsData.forEach((req, idx) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><input type="text" class="form-control form-control-sm font-monospace fw-bold" value="${req.id}" onchange="updateReq(${idx}, 'id', this.value)"></td>
+                <td><textarea class="form-control form-control-sm" rows="2" onchange="updateReq(${idx}, 'text', this.value)">${req.text}</textarea></td>
+                <td>
+                    <select class="form-select form-select-sm" onchange="updateReq(${idx}, 'type', this.value)">
+                        <option value="Functional" ${req.type === 'Functional' ? 'selected' : ''}>Functional</option>
+                        <option value="Non-Functional" ${req.type === 'Non-Functional' ? 'selected' : ''}>Non-Functional</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-select form-select-sm" onchange="updateReq(${idx}, 'priority', this.value)">
+                        <option value="Must-Have" ${req.priority === 'Must-Have' ? 'selected' : ''}>Must-Have</option>
+                        <option value="Should-Have" ${req.priority === 'Should-Have' ? 'selected' : ''}>Should-Have</option>
+                        <option value="Could-Have" ${req.priority === 'Could-Have' ? 'selected' : ''}>Could-Have</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteReq(${idx})" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+        document.getElementById("reqCountBadge").innerText = `${requirementsData.length} Requirements`;
+    }
+
+    function updateReq(index, key, val) {
+        requirementsData[index][key] = val;
+    }
+
+    function deleteReq(index) {
+        requirementsData.splice(index, 1);
+        renderSRSTable();
+    }
+
+    document.getElementById("btnAddReq").addEventListener("click", () => {
+        const nextNum = requirementsData.length + 1;
+        const newId = `REQ-0${nextNum}`;
+        requirementsData.push({
+            id: newId,
+            text: "The system shall...",
+            type: "Functional",
+            priority: "Must-Have"
+        });
+        renderSRSTable();
+    });
+
+    document.getElementById("btnAnalyzeSRS").addEventListener("click", async () => {
+        const btn = document.getElementById("btnAnalyzeSRS");
+        btn.innerHTML = `<span class="spinner-border spinner-border-sm me-1"></span> Analyzing...`;
+        btn.disabled = true;
+
+        try {
+            const resp = await fetch("/api/srs/analyze", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ requirements: requirementsData })
+            });
+            const data = await resp.json();
+
+            // Show results
+            const card = document.getElementById("analysisResultCard");
+            card.classList.remove("d-none");
+
+            document.getElementById("avgScoreText").innerText = `${data.average_score}%`;
+            document.getElementById("gradeBadge").innerText = `Grade: ${data.overall_grade}`;
+            document.getElementById("gradeBadge").className = `badge ${data.average_score >= 80 ? 'bg-success' : 'bg-warning'}`;
+
+            // Badges
+            const badgeContainer = document.getElementById("ambiguityBadgesContainer");
+            badgeContainer.innerHTML = "";
+            if (data.total_ambiguities_detected === 0) {
+                badgeContainer.innerHTML = `<span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2"><i class="fa-solid fa-check me-1"></i> Zero Ambiguities Detected</span>`;
+            } else {
+                badgeContainer.innerHTML = `<span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2"><i class="fa-solid fa-triangle-exclamation me-1"></i> ${data.total_ambiguities_detected} Ambiguous Word(s) Found</span>`;
+            }
+
+            // Feedback list
+            const fList = document.getElementById("feedbackList");
+            fList.innerHTML = "";
+            data.requirements.forEach(r => {
+                const item = document.createElement("div");
+                item.className = "list-group-item p-3";
+                let statusBadge = r.status === 'EXCELLENT' ? '<span class="badge bg-success">Valid</span>' : (r.status === 'ACCEPTABLE' ? '<span class="badge bg-warning text-dark">Acceptable</span>' : '<span class="badge bg-danger">Revision Needed</span>');
+                
+                let suggestionsHtml = r.suggestions.map(s => `<li class="small text-danger">${s}</li>`).join("");
+
+                item.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <strong class="font-monospace text-primary">${r.req_id}</strong>
+                        <div>${statusBadge} <span class="badge bg-light text-dark border ms-1">${r.score}%</span></div>
+                    </div>
+                    <p class="small mb-1 text-dark">${r.text}</p>
+                    ${r.suggestions.length > 0 ? `<ul class="mb-0 ps-3">${suggestionsHtml}</ul>` : `<p class="small text-success mb-0"><i class="fa-solid fa-circle-check me-1"></i> Meets IEEE 830 clarity standard.</p>`}
+                `;
+                fList.appendChild(item);
+            });
+
+            card.scrollIntoView({ behavior: 'smooth' });
+        } catch (err) {
+            alert("Error analyzing SRS: " + err.message);
+        } finally {
+            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles me-1"></i> Analyze Quality & Ambiguity`;
+            btn.disabled = false;
+        }
+    });
+
+    // Initial render
+    renderSRSTable();
+</script>
+{% endblock %}

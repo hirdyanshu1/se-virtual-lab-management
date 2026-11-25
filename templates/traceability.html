@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Traceability Matrix | LabPilot AI{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <h3 class="fw-bold mb-1"><i class="fa-solid fa-network-wired text-primary me-2"></i> Requirements Traceability Matrix (RTM)</h3>
+            <p class="text-muted mb-0">Bi-directional mapping: Requirements (SRS) ➔ OOAD Design (UML) ➔ Verification (Test Cases).</p>
+        </div>
+        <div>
+            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 fs-6">
+                <i class="fa-solid fa-shield-halved me-1"></i> Verification Score: {{ matrix_data.traceability_coverage_percent }}%
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Coverage Summary Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <h6 class="text-muted fw-bold small mb-1">Total Requirements Specified</h6>
+            <h3 class="fw-bold text-dark mb-0">{{ matrix_data.total_requirements }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <h6 class="text-muted fw-bold small mb-1">Covered with Test Cases</h6>
+            <h3 class="fw-bold text-success mb-0">{{ matrix_data.covered_requirements }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <h6 class="text-muted fw-bold small mb-1">Orphaned / Uncovered</h6>
+            <h3 class="fw-bold text-danger mb-0">{{ matrix_data.uncovered_requirements }}</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Traceability Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm border-0 bg-white">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0">System Traceability Table</h6>
+                <span class="badge bg-primary">IEEE Std 1012 V&V Compliance</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 12%;">Req ID</th>
+                                <th style="width: 38%;">SRS Statement</th>
+                                <th style="width: 18%;">Mapped UML Class</th>
+                                <th style="width: 18%;">Linked Test Cases</th>
+                                <th style="width: 14%;">Coverage Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in matrix_data.matrix %}
+                            <tr class="{% if row.status == 'UNCOVERED' %}table-warning{% endif %}">
+                                <td class="font-monospace fw-bold text-primary">{{ row.req_id }}</td>
+                                <td class="small">{{ row.req_title }}</td>
+                                <td>
+                                    {% for cls in row.linked_uml %}
+                                    <span class="badge bg-light text-dark border font-monospace">{{ cls }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% if row.linked_tests %}
+                                        {% for tc in row.linked_tests %}
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle font-monospace">{{ tc }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span class="badge bg-danger-subtle text-danger">No Test Cases</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if row.status == 'COVERED' %}
+                                    <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> VERIFIED</span>
+                                    {% else %}
+                                    <span class="badge bg-warning text-dark"><i class="fa-solid fa-triangle-exclamation me-1"></i> GAP DETECTED</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

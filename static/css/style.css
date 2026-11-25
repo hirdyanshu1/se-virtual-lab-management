@@ -1,0 +1,196 @@
+/* LabPilot AI - Clean Academic & Modern Lab Stylesheet
+   RTU B.Tech Software Engineering Virtual Laboratory
+*/
+
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1e3a8a;
+    --accent-purple: #7c3aed;
+    --accent-purple-light: #ede9fe;
+    --success-green: #10b981;
+    --warning-yellow: #f59e0b;
+    --danger-red: #ef4444;
+    --dark-bg: #0f172a;
+    --light-bg: #f8fafc;
+    --card-border: #e2e8f0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--light-bg);
+    color: #1e293b;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar-brand span {
+    letter-spacing: -0.5px;
+}
+
+.nav-link.active-rtu {
+    background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(124,58,237,0.15));
+    border: 1px solid rgba(37,99,235,0.3);
+    border-radius: 6px;
+    color: #ffffff !important;
+}
+
+/* Cards & Containers */
+.card {
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+.border-rtu {
+    border-top: 4px solid var(--primary-color) !important;
+}
+
+.border-purple {
+    border-top: 4px solid var(--accent-purple) !important;
+}
+
+/* Code Editor */
+.code-editor {
+    font-family: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    background-color: var(--dark-bg);
+    color: #f8fafc;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+/* Diagram Preview */
+.mermaid-preview {
+    min-height: 350px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    padding: 24px;
+}
+
+/* Badges */
+.badge-ambiguous {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    font-weight: 600;
+}
+
+.badge-pass {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.badge-fail {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Step-by-Step Interactive Guide */
+.step-bubble {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.step-bubble.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.2);
+}
+
+.step-bubble.completed {
+    background-color: var(--success-green);
+    color: white;
+}
+
+.step-bubble.upcoming {
+    background-color: #e2e8f0;
+    color: #64748b;
+}
+
+.instruction-panel {
+    background-color: #f1f5f9;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+    padding: 16px;
+}
+
+.example-panel {
+    background-color: var(--accent-purple-light);
+    border-left: 4px solid var(--accent-purple);
+    border-radius: 0 8px 8px 0;
+    padding: 16px;
+}
+
+.output-panel {
+    background-color: #ecfdf5;
+    border-left: 4px solid var(--success-green);
+    border-radius: 0 8px 8px 0;
+    padding: 16px;
+}
+
+/* Nav Tabs */
+.nav-tabs .nav-link {
+    color: #475569;
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 18px;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--primary-color);
+    border-bottom: 3px solid #cbd5e1;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    background-color: transparent;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+/* Gantt Chart Bar */
+.gantt-bar {
+    height: 24px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.gantt-bar.critical {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+.gantt-milestone {
+    width: 16px;
+    height: 16px;
+    background-color: #f59e0b;
+    transform: rotate(45deg);
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}

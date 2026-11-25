@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}RTU Software Engineering Virtual Lab | LabPilot AI{% endblock %}
+
+{% block content %}
+<!-- Header Card -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-4 bg-white rounded-3 shadow-sm border border-rtu d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge bg-primary px-3 py-1 fw-bold">RTU Syllabus 3CS4-21</span>
+                    <span class="badge bg-purple-subtle text-purple fw-bold px-3 py-1" style="background-color: #ede9fe; color: #6d28d9;">B.Tech 3rd Semester</span>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark">
+                    <i class="fa-solid fa-graduation-cap text-primary me-2"></i> RTU Software Engineering Virtual Laboratory
+                </h3>
+                <p class="text-muted mb-0">
+                    Interactive guided practicals: Requirements, DFDs, Structure Charts, UML OOAD, GCC Code Execution & Project Scheduling.
+                </p>
+            </div>
+            
+            <div class="text-end">
+                <span class="small text-muted d-block mb-1">Overall Curriculum Progress</span>
+                <div class="d-flex align-items-center gap-3">
+                    <div style="width: 140px;">
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ progress_data.overall_percent }}%;"></div>
+                        </div>
+                    </div>
+                    <span class="fw-bold fs-5 text-success">{{ progress_data.completed_count }} / {{ progress_data.total_experiments }}</span>
+                </div>
+                <span class="badge bg-light text-dark border mt-1">{{ progress_data.overall_percent }}% Completed</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Curriculum Progress Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted small fw-bold d-block">TOTAL PRACTICALS</span>
+                    <h3 class="fw-bold text-dark mb-0">7 Experiments</h3>
+                </div>
+                <span class="badge bg-primary-subtle text-primary fs-5 p-2 rounded-3"><i class="fa-solid fa-list-check"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted small fw-bold d-block">COMPLETED</span>
+                    <h3 class="fw-bold text-success mb-0">{{ progress_data.completed_count }} Done</h3>
+                </div>
+                <span class="badge bg-success-subtle text-success fs-5 p-2 rounded-3"><i class="fa-solid fa-circle-check"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted small fw-bold d-block">IN PROGRESS</span>
+                    <h3 class="fw-bold text-warning mb-0">{{ progress_data.in_progress_count }} Active</h3>
+                </div>
+                <span class="badge bg-warning-subtle text-warning fs-5 p-2 rounded-3"><i class="fa-solid fa-spinner"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0 bg-white p-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="text-muted small fw-bold d-block">ACTIVE STUDENT</span>
+                    <h6 class="fw-bold text-dark mb-0 text-truncate" style="max-width: 140px;">{{ current_student.name }}</h6>
+                    <span class="small text-muted font-monospace">{{ current_student.roll_no }}</span>
+                </div>
+                <span class="badge bg-info-subtle text-info fs-5 p-2 rounded-3"><i class="fa-solid fa-user-graduate"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 7 Experiment Cards Grid -->
+<div class="row g-4">
+    {% for exp in experiments %}
+    {% set p = progress_data.progress_map.get(exp.id, {}) %}
+    {% set status = p.get('status', 'NOT_STARTED') %}
+    {% set pct = p.get('progress_percent', 0) %}
+    
+    <div class="col-lg-6 col-xl-4">
+        <div class="card h-100 shadow-sm border-0 bg-white card-hover d-flex flex-column {% if status == 'COMPLETED' %}border-success{% else %}border-rtu{% endif %}">
+            <div class="card-body p-4 d-flex flex-column">
+                
+                <!-- Card Header -->
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge bg-dark font-monospace">{{ exp.code }}</span>
+                    {% if status == 'COMPLETED' %}
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
+                            <i class="fa-solid fa-check me-1"></i> Completed
+                        </span>
+                    {% elif status == 'IN_PROGRESS' %}
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">
+                            <i class="fa-solid fa-clock-rotate-left me-1"></i> In Progress ({{ pct }}%)
+                        </span>
+                    {% else %}
+                        <span class="badge bg-light text-secondary border px-2 py-1">Not Started</span>
+                    {% endif %}
+                </div>
+
+                <!-- Title & Category -->
+                <h5 class="fw-bold text-dark mb-1" style="font-size: 1.1rem; min-height: 2.4rem;">
+                    {{ exp.title }}
+                </h5>
+                <span class="text-primary small fw-semibold mb-2 d-block">
+                    <i class="fa-solid fa-tag me-1"></i> {{ exp.category }}
+                </span>
+
+                <p class="text-muted small mb-3 flex-grow-1">
+                    {{ exp.short_desc }}
+                </p>
+
+                <!-- Metadata Row -->
+                <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded-3 mb-3 small">
+                    <span class="text-muted"><i class="fa-regular fa-clock me-1 text-primary"></i> {{ exp.duration }}</span>
+                    <span>
+                        Difficulty: 
+                        <span class="badge {% if exp.difficulty == 'Beginner' %}bg-success{% elif exp.difficulty == 'Intermediate' %}bg-primary{% else %}bg-danger{% endif %}">
+                            {{ exp.difficulty }}
+                        </span>
+                    </span>
+                    <span><i class="fa-solid fa-bars-progress me-1 text-info"></i> 8 Steps</span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small text-muted mb-1">
+                        <span>Practical Progress</span>
+                        <span class="fw-bold">{{ pct }}%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar {% if status == 'COMPLETED' %}bg-success{% else %}bg-primary{% endif %}" style="width: {{ pct }}%;"></div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 mt-auto pt-2">
+                    <a href="/rtu-lab/experiment/{{ exp.id }}" class="btn btn-primary fw-semibold flex-grow-1">
+                        {% if status == 'COMPLETED' %}
+                            <i class="fa-solid fa-arrow-rotate-right me-1"></i> Review Practical
+                        {% elif status == 'IN_PROGRESS' %}
+                            <i class="fa-solid fa-play me-1"></i> Continue (Step {{ p.get('current_step', 1) }})
+                        {% else %}
+                            <i class="fa-solid fa-flask me-1"></i> Start Experiment
+                        {% endif %}
+                    </a>
+
+                    {% if status == 'COMPLETED' %}
+                    <a href="/rtu-lab/export/report-pdf/{{ exp.id }}" class="btn btn-outline-success" title="Download Official RTU Practical Report PDF">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

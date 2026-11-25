@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | LabPilot AI{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="p-4 bg-white rounded-3 shadow-sm border d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-1 fw-bold">Academic Year 2026-27</span>
+                <h3 class="fw-bold mb-1">Software Engineering Virtual Laboratory</h3>
+                <p class="text-muted mb-0">Hands-on interactive lab: SRS Requirements, OOAD UML Design, Boundary Testing & Traceability.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="/workbench" class="btn btn-primary fw-semibold px-4 py-2">
+                    <i class="fa-solid fa-play me-2"></i> Start Experiment 1
+                </a>
+                <a href="/teacher" class="btn btn-outline-secondary fw-semibold px-3 py-2">
+                    <i class="fa-solid fa-user-tie me-1"></i> Teacher View
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Skill Passport & Metrics Row -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0 bg-white">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-bold mb-0">SRS Quality Index</h6>
+                    <span class="badge bg-info-subtle text-info fs-6"><i class="fa-solid fa-file-pen"></i></span>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark">92%</h3>
+                <p class="text-muted small mb-0"><i class="fa-solid fa-check text-success me-1"></i> Ambiguity detection active</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0 bg-white">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-bold mb-0">UML Verification</h6>
+                    <span class="badge bg-success-subtle text-success fs-6"><i class="fa-solid fa-sitemap"></i></span>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark">Class + UseCase</h3>
+                <p class="text-muted small mb-0"><i class="fa-solid fa-check text-success me-1"></i> Mermaid.js Live Studio</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0 bg-white">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-bold mb-0">Compiler Engine</h6>
+                    <span class="badge bg-warning-subtle text-warning fs-6"><i class="fa-solid fa-terminal"></i></span>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark">GCC / Python</h3>
+                <p class="text-muted small mb-0"><i class="fa-solid fa-check text-success me-1"></i> Real Code Execution</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0 bg-white">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="text-muted fw-bold mb-0">Traceability</h6>
+                    <span class="badge bg-primary-subtle text-primary fs-6"><i class="fa-solid fa-code-fork"></i></span>
+                </div>
+                <h3 class="fw-bold mb-1 text-dark">100% Covered</h3>
+                <p class="text-muted small mb-0"><i class="fa-solid fa-check text-success me-1"></i> 6/6 Requirements Tested</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Experiments Section -->
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 bg-white mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0"><i class="fa-solid fa-list-check text-primary me-2"></i> Prescribed Laboratory Practicals</h5>
+                <span class="badge bg-secondary">Term Practicals</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    <!-- Experiment 1 -->
+                    <div class="list-group-item p-4">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                            <div>
+                                <span class="badge bg-primary me-2">EXP-01</span>
+                                <h5 class="d-inline-block fw-bold mb-0">Triangle Problem & Boundary Value Testing</h5>
+                            </div>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1">Ready to Test</span>
+                        </div>
+                        <p class="text-muted mb-3">
+                            Design a formal SRS specification, model the Class diagram, and create a comprehensive Boundary Value test suite executed against compiled C and Python programs.
+                        </p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="/srs" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-file-lines me-1"></i> 1. SRS Builder</a>
+                            <a href="/uml" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-diagram-project me-1"></i> 2. UML Studio</a>
+                            <a href="/workbench" class="btn btn-sm btn-success"><i class="fa-solid fa-play me-1"></i> 3. Run Test Suite</a>
+                            <a href="/traceability" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-network-wired me-1"></i> 4. View Traceability</a>
+                        </div>
+                    </div>
+
+                    <!-- Experiment 2 -->
+                    <div class="list-group-item p-4 opacity-75">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                            <div>
+                                <span class="badge bg-secondary me-2">EXP-02</span>
+                                <h5 class="d-inline-block fw-bold mb-0">ATM Cash Dispenser State Machine</h5>
+                            </div>
+                            <span class="badge bg-light text-secondary border px-3 py-1">Experiment 2</span>
+                        </div>
+                        <p class="text-muted mb-2">
+                            State transition testing and sequence diagram modeling for PIN verification, card validation, and balance withdrawal limits.
+                        </p>
+                    </div>
+
+                    <!-- Experiment 3 -->
+                    <div class="list-group-item p-4 opacity-75">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                            <div>
+                                <span class="badge bg-secondary me-2">EXP-03</span>
+                                <h5 class="d-inline-block fw-bold mb-0">Online Bookstore System Integration</h5>
+                            </div>
+                            <span class="badge bg-light text-secondary border px-3 py-1">Experiment 3</span>
+                        </div>
+                        <p class="text-muted mb-2">
+                            End-to-end integration testing and full SRS IEEE 830 documentation generation with mock cart services.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practical Skill Passport (Sidebar) -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 bg-white mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h5 class="fw-bold mb-0"><i class="fa-solid fa-award text-warning me-2"></i> Practical Skill Passport</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                        <span>Requirements Engineering</span>
+                        <span class="text-success">Level 4 (Advanced)</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-success" style="width: 85%;"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                        <span>OOAD & UML Modeling</span>
+                        <span class="text-primary">Level 3 (Proficient)</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-primary" style="width: 75%;"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                        <span>Boundary Value Testing</span>
+                        <span class="text-warning">Level 4 (Advanced)</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-warning" style="width: 90%;"></div>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                        <span>Traceability & Verification</span>
+                        <span class="text-info">Level 4 (Mastery)</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-info" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="p-3 bg-light rounded-3">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="fa-solid fa-dna text-danger"></i>
+                        <span class="fw-bold small">Mistake DNA Status</span>
+                    </div>
+                    <p class="text-muted small mb-0">
+                        Zero boundary failures detected in latest run. Keep testing both positive and negative extremes!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
